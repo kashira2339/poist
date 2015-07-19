@@ -1,7 +1,7 @@
 var poist = postit || function(title, text) {
 
-    var _title = title === 'undefined' ? '' : title;
-    var _text = text === 'undefined' ? '' : text;
+    var _title = title === undefined ? '' : title;
+    var _text = text === undefined ? '' : text;
     var _position = {
         x : 0,
         y : 0
@@ -13,11 +13,16 @@ var poist = postit || function(title, text) {
     };
 
     return {
-        resize : function(x, y) {},
+
+        move : function(x, y) {},
+        resize : function(width, height) {},
         edit : {
             title : function(str) {},
             text : function(str) {}
         },
+        apply : function() {
+
+        }
     };
 
 }(title, text);
