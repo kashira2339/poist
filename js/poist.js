@@ -1,4 +1,4 @@
-var poist = postit || function(title, text) {
+var Poist = Poist || function(title, text) {
 
     var _title = title === undefined ? '' : title;
     var _text = text === undefined ? '' : text;
