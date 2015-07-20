@@ -15,6 +15,7 @@ var Poist = Poist || function(title, text) {
         height : 0
     };
 
+    _container.draggable = true;
     _container.classList.add('poist-container');
     _header.classList.add('poist-header');
     _body.classList.add('poist-body');
@@ -23,6 +24,17 @@ var Poist = Poist || function(title, text) {
     _container.appendChild(_body);
     _header.appendChild(document.createTextNode(_title));
     _body.appendChild(document.createTextNode(_text));
+
+    _container.addEventListener('drag', function(e) {
+        console.log(e.target.offsetTop);
+        console.log(e.target.offsetLeft);
+    });
+
+    _container.addEventListener('dragstart', function(e) {
+    });
+
+    _container.addEventListener('dragend', function(e) {
+    });
 
     document.body.appendChild(_container);
 
