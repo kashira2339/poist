@@ -6,7 +6,7 @@
     "content_scripts": [
         {
             "matches": ["http://*/*", "https://*/*"],
-            "js": ["js/poist.js", "js/poist-controller.js"],
+            "js": ["js/poist.js", "js/poist_controller.js"],
             "css": ["css/main.css"]
         }
     ]

@@ -38,6 +38,8 @@ var Poist = Poist || function(title, text) {
 
     return {
         get: _container,
+        size: _size,
+        position: _position,
         move: function(x, y) {
             _position.x = x + 'px';
             _position.y = y + 'px';
