@@ -22,35 +22,35 @@ var Poist = Poist || function(title, text) {
 
     _container.appendChild(_header);
     _container.appendChild(_body);
-    _header.appendChild(document.createTextNode(_title));
-    _body.appendChild(document.createTextNode(_text));
-
-    _container.addEventListener('drag', function(e) {
-        console.log(e.target.offsetTop);
-        console.log(e.target.offsetLeft);
-    });
-
-    _container.addEventListener('dragstart', function(e) {
-    });
-
-    _container.addEventListener('dragend', function(e) {
-    });
 
     document.body.appendChild(_container);
 
+    apply();
+
+    function apply() {
+        _header.innerText = _title;
+        _body.innerText = _text;
+        _container.style.left = _position.x;
+        _container.style.top = _position.y;
+        _container.style.width = _size.width;
+        _container.style.height = _size.height;
+    }
+
     return {
-        move : function(x, y) {},
-        resize : function(width, height) {},
-        edit : {
+        get: _container,
+        move: function(x, y) {
+            _position.x = x + 'px';
+            _position.y = y + 'px';
+            apply();
+        },
+        resize: function(width, height) {
+            _size.width = width + 'px';
+            _size.height = height + 'px';
+            apply();
+        },
+        edit: {
             title : function(str) {},
             text : function(str) {}
-        },
-        apply : function() {
-
         }
     };
 };
-
-(function() {
-    var poist = new Poist('hoge', 'fuga');
-})();
