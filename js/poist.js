@@ -6,13 +6,13 @@ var Poist = Poist || function(title, text) {
     var _title = title === undefined ? '' : title;
     var _text = text === undefined ? '' : text;
     var _position = {
-        x : 0,
-        y : 0
+        x : 10,
+        y : 10
     };
 
     var _size = {
-        width : 0,
-        height : 0
+        width : 300,
+        height : 300
     };
 
     _container.draggable = true;
@@ -30,10 +30,10 @@ var Poist = Poist || function(title, text) {
     function apply() {
         _header.innerText = _title;
         _body.innerText = _text;
-        _container.style.left = _position.x;
-        _container.style.top = _position.y;
-        _container.style.width = _size.width;
-        _container.style.height = _size.height;
+        _container.style.left = _position.x + 'px';
+        _container.style.top = _position.y + 'px';
+        _container.style.width = _size.width + 'px';
+        _container.style.height = _size.height + 'px';
     }
 
     return {
@@ -41,13 +41,13 @@ var Poist = Poist || function(title, text) {
         size: _size,
         position: _position,
         move: function(x, y) {
-            _position.x = x + 'px';
-            _position.y = y + 'px';
+            _position.x = x;
+            _position.y = y;
             apply();
         },
         resize: function(width, height) {
-            _size.width = width + 'px';
-            _size.height = height + 'px';
+            _size.width = width;
+            _size.height = height;
             apply();
         },
         edit: {
