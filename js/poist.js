@@ -42,7 +42,7 @@ var Poist = Poist || function(title, text) {
         position: _position,
         move: function(x, y) {
             _position.x = x;
-            _position.y = y;
+            _position.y = y - _size.height;
             apply();
         },
         resize: function(width, height) {

@@ -16,10 +16,13 @@
     });
 
     poist.get.addEventListener('dragend', function(e) {
-        poist.move(e.x, e.y);
-        relativeX = 0;
-        relativeY = 0;
+        poist.move(e.clientX+window.scrollX, e.clientY+window.scrollY);
         isDragging = false;
     });
 
+    poist.get.addEventListener('mousemove', function(e) {
+        if (isDragging) {
+            poist.move(e.x, e.y);
+        }
+    });
 })();
