@@ -2,6 +2,7 @@ var Poist = Poist || function(title, text) {
     var _container = document.createElement('div');
     var _header = document.createElement('div');
     var _body = document.createElement('div');
+    var _closeBtn = document.createElement('a');
 
     var _title = title === undefined ? '' : title;
     var _text = text === undefined ? '' : text;
@@ -20,12 +21,28 @@ var Poist = Poist || function(title, text) {
     _header.classList.add('poist-header');
     _body.classList.add('poist-body');
 
+    _closeBtn.addEventListener('click', function() {
+        remove();
+    });
+    _header.appendChild(_closeBtn);
+
     _container.appendChild(_header);
     _container.appendChild(_body);
 
     document.body.appendChild(_container);
 
     apply();
+
+    _container.addEventListener('dragend', function(e) {
+        moveTo(e.clientX + window.scrollX,
+               e.clientY + window.scrollY);
+    });
+
+    function moveTo(x, y) {
+        _position.x = x;
+        _position.y = y - _size.height;
+        apply();
+    }
 
     function apply() {
         _header.innerText = _title;
@@ -36,15 +53,14 @@ var Poist = Poist || function(title, text) {
         _container.style.height = _size.height + 'px';
     }
 
+    function removeThis() {
+        //処理
+    }
+
     return {
         get: _container,
         size: _size,
         position: _position,
-        move: function(x, y) {
-            _position.x = x;
-            _position.y = y - _size.height;
-            apply();
-        },
         resize: function(width, height) {
             _size.width = width;
             _size.height = height;
@@ -53,6 +69,8 @@ var Poist = Poist || function(title, text) {
         edit: {
             title : function(str) {},
             text : function(str) {}
+        },
+        remove: function() {
         }
     };
 };
