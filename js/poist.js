@@ -75,6 +75,12 @@ var Poist = Poist || function(text) {
             title : function(str) {},
             text : function(str) {}
         },
+        show: function() {
+            _container.style.display = 'block';
+        },
+        hide: function() {
+            _container.style.display = 'none';
+        },
         remove: function() {
             removeThis();
         },

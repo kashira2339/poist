@@ -40,8 +40,15 @@ var PoistHolder = function() {
             var poist = poistList.splice(index, 1);
             _save();
         },
-        save: function(){
+        save: function() {
             _save();
+        },
+        setVisible: function(bool) {
+            for (var i = 0, len = poistList.length; i < len; i++)  {
+                (function(i) {
+                    poistList[i][bool ? 'show' : 'hide']();
+                })(i);
+            }
         }
     };
 };

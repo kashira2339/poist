@@ -1,5 +1,5 @@
-var PoistController = function() {
-    var poistHolder = new PoistHolder();
+var PoistController = function(holder) {
+    var poistHolder = holder;
 
     var container = document.createElement('div');
 
@@ -11,22 +11,18 @@ var PoistController = function() {
         poistHolder.add(poist);
     });
 
-    window.addEventListener('beforeunload', function() {
-        poistHolder.save();
-    });
-
     var visibilityCheck = document.createElement('input');
     visibilityCheck.type = 'checkbox';
+    visibilityCheck.checked = false;
+    poistHolder.setVisible(false);
+
+    visibilityCheck.addEventListener('change', function(e) {
+        poistHolder.setVisible(e.target.checked);
+    });
+
     container.classList.add('poist-controller');
     container.appendChild(visibilityCheck);
     container.appendChild(addBtn);
 
     document.body.appendChild(container);
 };
-
-
-
-(function() {
-    new PoistController();
-
-})();
