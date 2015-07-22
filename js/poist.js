@@ -71,6 +71,22 @@ var Poist = Poist || function(title, text) {
             text : function(str) {}
         },
         remove: function() {
+            removeThis();
+        },
+        toJson: function() {
+            var obj = {
+                title: _title,
+                body: _text,
+                position: _position,
+                size: _size
+            };
+            return JSON.stringify(obj);
+        },
+        data: {
+            title: _title,
+            body: _text,
+            position: _position,
+            size: _size
         }
     };
 };
