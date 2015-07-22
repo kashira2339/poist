@@ -11,23 +11,23 @@ var PoistHolder = function() {
         return JSON.stringify(map);
     }
 
+    function _save() {
+        localStorage.setItem(LOCAL_STORAGE_KEY, _toJson());
+    }
+
     return {
         add: function(elm) {
             poistList.push(elm);
+            _save();
         },
         remove: function(index) {
-        },
-        toJson: function() {
-            return _toJson();
-        },
-        save: function() {
-            localStorage.setItem(LOCAL_STORAGE_KEY, _toJson());
+            poistList.splice(index, 1);
+            _save();
         }
     };
 };
 
 var PoistController = function() {
-
     var poistHolder = new PoistHolder();
 
     var container = document.createElement('div');
@@ -38,12 +38,10 @@ var PoistController = function() {
     addBtn.addEventListener('click', function() {
         var poist = new Poist('No Title', window.getSelection().toString());
         poistHolder.add(poist);
-        poistHolder.save();
     });
 
     var visibilityCheck = document.createElement('input');
     visibilityCheck.type = 'checkbox';
-
     container.classList.add('poist-controller');
     container.appendChild(visibilityCheck);
     container.appendChild(addBtn);
