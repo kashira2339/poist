@@ -1,18 +1,34 @@
 var PoistHolder = function() {
     var LOCAL_STORAGE_KEY = 'poist-data';
     var poistList = [];
+    _load();
 
     function _toJson() {
         var map = {};
         map.data = [];
         for (var i = 0, len = poistList.length; i < len; i++)  {
-            map.data.push(poistList[i].data);
+            (function(i) {
+                map.data.push(poistList[i].data);
+            })(i);
         }
         return JSON.stringify(map);
     }
 
     function _save() {
         localStorage.setItem(LOCAL_STORAGE_KEY, _toJson());
+    };
+
+    function _load() {
+        var json = localStorage.getItem(LOCAL_STORAGE_KEY);
+        var data = JSON.parse(json).data || [];
+        for (var i = 0, len = data.length; i < len; i++)  {
+            (function(i, d) {
+                var poist = new Poist(d[i].body);
+                poist.move(d[i].position.x, d[i].position.y);
+                poist.resize(d[i].size.width, d[i].size.height);
+                poistList.push(poist);
+            })(i, data);
+        }
     }
 
     return {
@@ -21,7 +37,10 @@ var PoistHolder = function() {
             _save();
         },
         remove: function(index) {
-            poistList.splice(index, 1);
+            var poist = poistList.splice(index, 1);
+            _save();
+        },
+        save: function(){
             _save();
         }
     };
@@ -36,8 +55,12 @@ var PoistController = function() {
     addBtn.innerText = '+';
 
     addBtn.addEventListener('click', function() {
-        var poist = new Poist('No Title', window.getSelection().toString());
+        var poist = new Poist( window.getSelection().toString());
         poistHolder.add(poist);
+    });
+
+    window.addEventListener('beforeunload', function() {
+        poistHolder.save();
     });
 
     var visibilityCheck = document.createElement('input');
@@ -49,6 +72,9 @@ var PoistController = function() {
     document.body.appendChild(container);
 };
 
+
+
 (function() {
     new PoistController();
+
 })();

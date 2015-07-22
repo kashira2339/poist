@@ -1,10 +1,10 @@
-var Poist = Poist || function(title, text) {
+var Poist = Poist || function(text) {
     var _container = document.createElement('div');
     var _header = document.createElement('div');
     var _body = document.createElement('div');
     var _closeBtn = document.createElement('a');
 
-    var _title = title === undefined ? '' : title;
+    var _title = 'No Title';
     var _text = text === undefined ? '' : text;
     var _position = {
         x : 10,
@@ -12,8 +12,8 @@ var Poist = Poist || function(title, text) {
     };
 
     var _size = {
-        width : 300,
-        height : 300
+        width : 250,
+        height : 100
     };
 
     _container.draggable = true;
@@ -61,6 +61,11 @@ var Poist = Poist || function(title, text) {
         get: _container,
         size: _size,
         position: _position,
+        move: function(x, y) {
+            _position.x = x;
+            _position.y = y;
+            apply();
+        },
         resize: function(width, height) {
             _size.width = width;
             _size.height = height;
