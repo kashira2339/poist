@@ -22,7 +22,21 @@ var Poist = Poist || function(text) {
     _container.classList.add('poist-container');
 
     _header.classList.add('poist-header');
+
+    var _bodyEditor = document.createElement('textarea');
+
     _body.classList.add('poist-body');
+    _body.addEventListener('dblclick', function() {
+        _body.innerText = '';
+        _body.appendChild(_bodyEditor);
+        _bodyEditor.value = _text;
+        _bodyEditor.focus();
+    });
+
+    _bodyEditor.addEventListener('blur', function(e) {
+        _text = _bodyEditor.value;
+        apply();
+    });
 
     _closeBtn.innerText = 'CLOSE';
 
@@ -58,6 +72,7 @@ var Poist = Poist || function(text) {
         _container.style.top = _position.y + 'px';
         _container.style.width = _size.width + 'px';
         _container.style.height = _size.height + 'px';
+        PoistObject.holder.save();
     }
 
     function removeThis() {
@@ -101,11 +116,13 @@ var Poist = Poist || function(text) {
             };
             return JSON.stringify(obj);
         },
-        data: {
-            title: _title,
-            body: _text,
-            position: _position,
-            size: _size
+        data: function() {
+            return {
+                title: _title,
+                body: _text,
+                position: _position,
+                size: _size
+            };
         },
         index: _index
     };

@@ -10,7 +10,7 @@ var PoistHolder = function() {
                 if(poistList[i] === undefined) {
                     map.data.push({});
                 } else {
-                    map.data.push(poistList[i].data || {});
+                    map.data.push(poistList[i].data() || {});
                 }
             })(i);
         }
@@ -23,11 +23,9 @@ var PoistHolder = function() {
 
     function _load() {
         var json = localStorage.getItem(LOCAL_STORAGE_KEY);
-        console.debug(json);
         var data = JSON.parse(json).data || [];
         for (var i = 0, len = data.length; i < len; i++)  {
             (function(i, d) {
-                console.log(d[i]);
                 if(Object.keys(d[i]).length === 0) {
                     return;
                 }
@@ -50,7 +48,6 @@ var PoistHolder = function() {
         remove: function(index) {
             delete poistList[index - 1];
             _save();
-            console.log(poistList);
         },
         size: function() {
             return poistList.length;
