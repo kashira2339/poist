@@ -1,31 +1,52 @@
 var PoistHolder = function() {
     var LOCAL_STORAGE_KEY = 'poist-data';
+    // Poistオブジェクトを保存するリスト
     var poistList = [];
+    var isFirst = true;
 
+    /*
+     * poistListをjsonに変換
+     */
     function _toJson() {
         var map = {};
         map.data = [];
-        for (var i = 0, len = poistList.length; i < len; i++)  {
-            (function(i) {
-                if(poistList[i] === undefined) {
-                    map.data.push({});
-                } else {
-                    map.data.push(poistList[i].data() || {});
-                }
-            })(i);
-        }
+        _loopList(function(i, list) {
+            map.data.push(!!list[i] ? poistList[i].data() || {} : {});
+        }, poistList);
         return JSON.stringify(map);
     }
 
+    /*
+     * ローカルストレージにjsonを保存
+     */
     function _save() {
         localStorage.setItem(LOCAL_STORAGE_KEY, _toJson());
     }
 
-    function _load() {
-        var json = localStorage.getItem(LOCAL_STORAGE_KEY);
-        var data = JSON.parse(json).data || [];
-        for (var i = 0, len = data.length; i < len; i++)  {
-            (function(i, d) {
+    /*
+     * 反復処理を請け負うメソッド
+     */
+    function _loopList(func, list) {
+        for (var i = 0, len = list.length; i < len; i++)  {
+            func(i, list);
+        }
+    }
+
+    return {
+        /*
+         * 初期化関数 最初に実行する
+         */
+        init: function() {
+            if (!isFirst) {
+                return;
+            }
+            var json = localStorage.getItem(LOCAL_STORAGE_KEY);
+            var obj = JSON.parse(json);
+            if (!obj) {
+                return;
+            }
+            var data = obj.data || [];
+            _loopList(function(i, d) {
                 if(Object.keys(d[i]).length === 0) {
                     return;
                 }
@@ -33,13 +54,8 @@ var PoistHolder = function() {
                 poist.move(d[i].position.x, d[i].position.y);
                 poist.resize(d[i].size.width, d[i].size.height);
                 poistList.push(poist);
-            })(i, data);
-        }
-    }
-
-    return {
-        init: function() {
-            _load();
+            }, data);
+            isFirst = false;
         },
         add: function(elm) {
             poistList.push(elm);
@@ -56,18 +72,14 @@ var PoistHolder = function() {
             _save();
         },
         setVisible: function(bool) {
-            for (var i = 0, len = poistList.length; i < len; i++)  {
-                (function(i) {
-                    poistList[i][bool ? 'show' : 'hide']();
-                })(i);
-            }
+            _loopList(function(i, list) {
+                list[i][bool ? 'show' : 'hide']();
+            }, poistList);
         },
         sinkPoistList: function() {
-            for (var i = 0, len = poistList.length; i < len; i++)  {
-                (function(i) {
-                    poistList[i].sink();
-                })(i);
-            }
+            _loopList(function(i, list) {
+                list[i].sink();
+            }, poistList);
         }
     };
 };

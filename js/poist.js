@@ -5,6 +5,7 @@ var Poist = Poist || function(text) {
     var _header = document.createElement('div');
     var _body = document.createElement('div');
     var _closeBtn = document.createElement('a');
+    var _bodyEditor = document.createElement('textarea');
 
     var _title = 'No Title';
     var _text = text === undefined ? '' : text;
@@ -18,69 +19,27 @@ var Poist = Poist || function(text) {
         height : 100
     };
 
-    _container.draggable = true;
-    _container.classList.add('poist-container');
-
-    _header.classList.add('poist-header');
-
-    var _bodyEditor = document.createElement('textarea');
-    _bodyEditor.classList.add('.poist-text');
-
-    _body.classList.add('poist-body');
-    _body.addEventListener('dblclick', function() {
-        _body.innerText = '';
-        _body.appendChild(_bodyEditor);
-        _bodyEditor.value = _text;
-        _bodyEditor.focus();
-    });
-
-    _bodyEditor.addEventListener('blur', function(e) {
-        _text = _bodyEditor.value;
-        apply();
-    });
-
-    _closeBtn.innerText = 'CLOSE';
-
-    _closeBtn.addEventListener('click', function() {
-        PoistObject.holder.remove(_index);
-        removeThis();
-    });
-
-    _header.appendChild(_closeBtn);
-
-    _container.appendChild(_header);
-    _container.appendChild(_body);
-
-    document.body.appendChild(_container);
-
-    apply();
-
-    _container.addEventListener('dragstart', function(e) {
-        float(e.target);
-    });
-
-    _container.addEventListener('dragend', function(e) {
-        moveTo(e.clientX + window.scrollX,
-               e.clientY + window.scrollY);
-    });
-
-    _container.addEventListener('click', function(e) {
-        float(e.target);
-    });
-
+    /*
+     * 付箋を浮かせる
+     */
     function float(_container) {
         PoistObject.holder.sinkPoistList();
         _container.classList.add('top-poist');
     }
 
+    /*
+     * 付箋を動かす
+     */
     function moveTo(x, y) {
         _position.x = x;
         _position.y = y - _size.height;
         apply();
     }
 
+    /*
+     * 付箋情報の変更を反映する
+     */
     function apply() {
-        // _header.innerText = _title;
         _body.innerText = _text;
         _container.style.left = _position.x + 'px';
         _container.style.top = _position.y + 'px';
@@ -89,14 +48,77 @@ var Poist = Poist || function(text) {
         PoistObject.holder.save();
     }
 
-    function removeThis() {
+    /*
+     * bodyEditor 付箋に付属するテキストエリア
+     * テキスト編集用
+     * ダブルクリックで出現
+     */
+    _bodyEditor.classList.add('poist-text');
+    _bodyEditor.addEventListener('blur', function(e) {
+        _text = _bodyEditor.value;
+        apply();
+    });
+
+    /*
+     * 付箋の内容部分
+     * テキストが保存されている
+     */
+    _body.classList.add('poist-body');
+    _body.addEventListener('dblclick', function() {
+        _body.innerText = '';
+        _body.appendChild(_bodyEditor);
+        _bodyEditor.value = _text;
+        _bodyEditor.focus();
+    });
+
+    /*
+     * 閉じるボタン
+     * 付箋を消す
+     */
+    _closeBtn.innerText = 'CLOSE';
+    _closeBtn.addEventListener('click', function() {
+        PoistObject.holder.remove(_index);
         _container.parentNode.removeChild(_container);
-    }
+    });
+
+    /*
+     * 付箋のヘッダー
+     * 閉じるボタンを持つ
+     */
+    _header.classList.add('poist-header');
+    _header.appendChild(_closeBtn);
+
+    /*
+     * 付箋そのもの・コンテナ
+     * ドラッグで持ち運べる
+     * クリックした付箋が最前面にくる
+     */
+    _container.draggable = true;
+    _container.classList.add('poist-container');
+    _container.appendChild(_header);
+    _container.appendChild(_body);
+    _container.addEventListener('dragstart', function(e) {
+        float(e.target);
+    });
+    _container.addEventListener('dragend', function(e) {
+        moveTo(e.clientX + window.scrollX,
+               e.clientY + window.scrollY);
+    });
+    _container.addEventListener('click', function(e) {
+        float(e.target);
+    });
+
+    /*
+     * 付箋をページに追加
+     */
+    document.body.appendChild(_container);
+
+    /*
+     * 反映
+     */
+    apply();
 
     return {
-        get: _container,
-        size: _size,
-        position: _position,
         move: function(x, y) {
             _position.x = x;
             _position.y = y;
@@ -106,10 +128,6 @@ var Poist = Poist || function(text) {
             _size.width = width;
             _size.height = height;
             apply();
-        },
-        edit: {
-            title : function(str) {},
-            text : function(str) {}
         },
         show: function() {
             _container.style.display = 'block';
@@ -123,15 +141,6 @@ var Poist = Poist || function(text) {
         sink: function() {
             _container.classList.remove('top-poist');
         },
-        toJson: function() {
-            var obj = {
-                title: _title,
-                body: _text,
-                position: _position,
-                size: _size
-            };
-            return JSON.stringify(obj);
-        },
         data: function() {
             return {
                 title: _title,
@@ -139,7 +148,6 @@ var Poist = Poist || function(text) {
                 position: _position,
                 size: _size
             };
-        },
-        index: _index
+        }
     };
 };
