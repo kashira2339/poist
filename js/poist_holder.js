@@ -1,14 +1,17 @@
 var PoistHolder = function() {
     var LOCAL_STORAGE_KEY = 'poist-data';
     var poistList = [];
-    _load();
 
     function _toJson() {
         var map = {};
         map.data = [];
         for (var i = 0, len = poistList.length; i < len; i++)  {
             (function(i) {
-                map.data.push(poistList[i].data);
+                if(poistList[i] === undefined) {
+                    map.data.push({});
+                } else {
+                    map.data.push(poistList[i].data || {});
+                }
             })(i);
         }
         return JSON.stringify(map);
@@ -16,13 +19,18 @@ var PoistHolder = function() {
 
     function _save() {
         localStorage.setItem(LOCAL_STORAGE_KEY, _toJson());
-    };
+    }
 
     function _load() {
         var json = localStorage.getItem(LOCAL_STORAGE_KEY);
+        console.debug(json);
         var data = JSON.parse(json).data || [];
         for (var i = 0, len = data.length; i < len; i++)  {
             (function(i, d) {
+                console.log(d[i]);
+                if(Object.keys(d[i]).length === 0) {
+                    return;
+                }
                 var poist = new Poist(d[i].body);
                 poist.move(d[i].position.x, d[i].position.y);
                 poist.resize(d[i].size.width, d[i].size.height);
@@ -32,13 +40,20 @@ var PoistHolder = function() {
     }
 
     return {
+        init: function() {
+            _load();
+        },
         add: function(elm) {
             poistList.push(elm);
             _save();
         },
         remove: function(index) {
-            var poist = poistList.splice(index, 1);
+            delete poistList[index - 1];
             _save();
+            console.log(poistList);
+        },
+        size: function() {
+            return poistList.length;
         },
         save: function() {
             _save();

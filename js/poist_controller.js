@@ -1,5 +1,5 @@
-var PoistController = function(holder) {
-    var poistHolder = holder;
+var PoistController = function() {
+    var poistHolder = PoistObject.holder;
 
     var container = document.createElement('div');
 

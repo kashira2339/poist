@@ -1,9 +1,13 @@
+var PoistObject = PoistObject || {};
+
 (function() {
-    var holder = new PoistHolder();
-    var controller = new PoistController(holder);
+    PoistObject.holder = new PoistHolder();
+    PoistObject.controller = new PoistController();
+
+    PoistObject.holder.init();
 
     window.addEventListener('beforeunload', function() {
-        poistHolder.save();
+        PoistObject.holder.save();
     });
 
 })();

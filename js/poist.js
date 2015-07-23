@@ -1,4 +1,6 @@
 var Poist = Poist || function(text) {
+    var _index = PoistObject.holder.size() + 1;
+
     var _container = document.createElement('div');
     var _header = document.createElement('div');
     var _body = document.createElement('div');
@@ -18,12 +20,17 @@ var Poist = Poist || function(text) {
 
     _container.draggable = true;
     _container.classList.add('poist-container');
+
     _header.classList.add('poist-header');
     _body.classList.add('poist-body');
 
+    _closeBtn.innerText = 'CLOSE';
+
     _closeBtn.addEventListener('click', function() {
-        remove();
+        PoistObject.holder.remove(_index);
+        removeThis();
     });
+
     _header.appendChild(_closeBtn);
 
     _container.appendChild(_header);
@@ -45,7 +52,7 @@ var Poist = Poist || function(text) {
     }
 
     function apply() {
-        _header.innerText = _title;
+        // _header.innerText = _title;
         _body.innerText = _text;
         _container.style.left = _position.x + 'px';
         _container.style.top = _position.y + 'px';
@@ -54,7 +61,8 @@ var Poist = Poist || function(text) {
     }
 
     function removeThis() {
-        //処理
+        console.log(_index);
+        _container.parentNode.removeChild(_container);
     }
 
     return {
@@ -82,7 +90,7 @@ var Poist = Poist || function(text) {
             _container.style.display = 'none';
         },
         remove: function() {
-            removeThis();
+            _container.parentNode.removeChild(_container);
         },
         toJson: function() {
             var obj = {
@@ -98,6 +106,7 @@ var Poist = Poist || function(text) {
             body: _text,
             position: _position,
             size: _size
-        }
+        },
+        index: _index
     };
 };
