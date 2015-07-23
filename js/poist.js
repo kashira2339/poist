@@ -24,6 +24,7 @@ var Poist = Poist || function(text) {
     _header.classList.add('poist-header');
 
     var _bodyEditor = document.createElement('textarea');
+    _bodyEditor.classList.add('.poist-text');
 
     _body.classList.add('poist-body');
     _body.addEventListener('dblclick', function() {
@@ -54,10 +55,23 @@ var Poist = Poist || function(text) {
 
     apply();
 
+    _container.addEventListener('dragstart', function(e) {
+        float(e.target);
+    });
+
     _container.addEventListener('dragend', function(e) {
         moveTo(e.clientX + window.scrollX,
                e.clientY + window.scrollY);
     });
+
+    _container.addEventListener('click', function(e) {
+        float(e.target);
+    });
+
+    function float(_container) {
+        PoistObject.holder.sinkPoistList();
+        _container.classList.add('top-poist');
+    }
 
     function moveTo(x, y) {
         _position.x = x;
@@ -76,7 +90,6 @@ var Poist = Poist || function(text) {
     }
 
     function removeThis() {
-        console.log(_index);
         _container.parentNode.removeChild(_container);
     }
 
@@ -106,6 +119,9 @@ var Poist = Poist || function(text) {
         },
         remove: function() {
             _container.parentNode.removeChild(_container);
+        },
+        sink: function() {
+            _container.classList.remove('top-poist');
         },
         toJson: function() {
             var obj = {

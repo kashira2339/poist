@@ -21,10 +21,14 @@
     height: 70px;
 }
 
-.poist-container > .poist-body > textarea {
+.poist-container > .poist-body > .poist-text {
     width: 100%;
     height: 100%;
     resize: none;
+}
+
+.poist-container.top-poist {
+    z-index: 100000;
 }
 
 .poist-controller {

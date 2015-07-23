@@ -61,6 +61,13 @@ var PoistHolder = function() {
                     poistList[i][bool ? 'show' : 'hide']();
                 })(i);
             }
+        },
+        sinkPoistList: function() {
+            for (var i = 0, len = poistList.length; i < len; i++)  {
+                (function(i) {
+                    poistList[i].sink();
+                })(i);
+            }
         }
     };
 };
