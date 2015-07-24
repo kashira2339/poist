@@ -16,8 +16,8 @@ var Poist = Poist || function(text) {
     };
 
     var _size = {
-        width : 250,
-        height : 100
+        width : 270,
+        height : 80
     };
 
     /*
@@ -76,7 +76,7 @@ var Poist = Poist || function(text) {
      * 閉じるボタン
      * 付箋を消す
      */
-    _closeBtn.innerText = 'CLOSE';
+    _closeBtn.innerText = '×';
     _closeBtn.addEventListener('click', function() {
         PoistObject.holder.remove(_index);
         _container.parentNode.removeChild(_container);
@@ -96,6 +96,7 @@ var Poist = Poist || function(text) {
      */
     _container.draggable = true;
     _container.classList.add('poist-container');
+    _container.classList.add('clear-fix');
     _container.appendChild(_header);
     _container.appendChild(_body);
     _container.addEventListener('dragstart', function(e) {
