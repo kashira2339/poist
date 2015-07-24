@@ -78,7 +78,9 @@ var PoistHolder = function() {
         },
         sinkPoistList: function() {
             _loopList(function(i, list) {
-                list[i].sink();
+                if(!!list[i]) {
+                    list[i].sink();
+                }
             }, poistList);
         }
     };

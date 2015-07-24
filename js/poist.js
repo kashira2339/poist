@@ -1,4 +1,5 @@
 var Poist = Poist || function(text) {
+    console.time('hoge');
     var _index = PoistObject.holder.size() + 1;
 
     var _container = document.createElement('div');
@@ -117,6 +118,8 @@ var Poist = Poist || function(text) {
      * 反映
      */
     apply();
+
+    console.timeEnd('hoge');
 
     return {
         move: function(x, y) {

@@ -3,6 +3,7 @@ var PoistController = function() {
     var container = document.createElement('div');
     var addBtn = document.createElement('button');
     var visibilityCheck = document.createElement('input');
+    var checkLabel = document.createElement('label');
 
     addBtn.innerText = '+';
     addBtn.addEventListener('click', function() {
@@ -16,8 +17,11 @@ var PoistController = function() {
         poistHolder.setVisible(e.target.checked);
     });
 
+    checkLabel.appendChild(document.createTextNode('表示'));
+    checkLabel.appendChild(visibilityCheck);
+
     container.classList.add('poist-controller');
-    container.appendChild(visibilityCheck);
+    container.appendChild(checkLabel);
     container.appendChild(addBtn);
 
     poistHolder.setVisible(true);
