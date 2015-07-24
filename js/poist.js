@@ -3,7 +3,7 @@ var Poist = Poist || function(text) {
 
     var _container = document.createElement('div');
     var _header = document.createElement('div');
-    var _body = document.createElement('div');
+    var _body = document.createElement('pre');
     var _closeBtn = document.createElement('a');
     var _bodyEditor = document.createElement('textarea');
 
