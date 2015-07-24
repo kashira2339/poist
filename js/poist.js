@@ -41,12 +41,14 @@ var Poist = Poist || function(text) {
      * 付箋情報の変更を反映する
      */
     function apply() {
-        _body.innerText = _text;
+        PoistObject.holder.save();
+
         _container.style.left = _position.x + 'px';
         _container.style.top = _position.y + 'px';
         _container.style.width = _size.width + 'px';
         _container.style.height = _size.height + 'px';
-        PoistObject.holder.save();
+
+        _body.innerText = _text;
     }
 
     /*

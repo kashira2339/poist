@@ -1,6 +1,4 @@
 .poist-container {
-    width: 270px;
-    height: 80px;
     mergin: 2px 2px 2px 2px;
     position: absolute;
     top: 10px;
@@ -33,7 +31,9 @@
 
 .poist-container > .poist-body {
     width: 246px;
-    overflow: scroll;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .poist-container > .poist-body > .poist-text {
@@ -86,18 +86,4 @@
 
 .poist-controller > button:hover {
     background-color: #2cc36b;
-}
-
-.clear-fix:before,
-.clear-fix:after {
-    content: " ";
-    display: table;
-}
-
-.clear-fix:after {
-    clear: both;
-}
-
-.clear-fix {
-    *zoom: 1;
 }
