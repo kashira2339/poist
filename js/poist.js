@@ -11,6 +11,7 @@ var Poist = Poist || function(text) {
     var _body = document.createElement('pre');
     var _closeBtn = document.createElement('a');
     var _bodyEditor = document.createElement('textarea');
+    var _resizePointer = document.createElement('div');
 
     var _title = 'No Title';
     var _text = text === undefined ? '' : text;
@@ -46,7 +47,7 @@ var Poist = Poist || function(text) {
      */
     function resizeTo(x, y) {
         _size.width = x;
-        _size.height = y - _size.height;
+        _size.height = y;
         apply();
     }
 
@@ -61,6 +62,43 @@ var Poist = Poist || function(text) {
         _container.style.height = _size.height + 'px';
         _body.innerText = _text;
     }
+
+    /*
+     * リサイズ用のポインタ
+     */
+    _resizePointer.draggable = true;
+    _resizePointer.classList.add('poist-resize-pointer');
+    _resizePointer.addEventListener('dragstart', function(e) {
+        _mouseStart.x = e.clientX;
+        _mouseStart.y = e.clientY;
+        _isResizing = true;
+    });
+    _resizePointer.addEventListener('drag', function(e) {
+        var x = e.clientX - _mouseStart.x;
+        var y = e.clientY - _mouseStart.y;
+        if (x === 0 || y === 0) {
+            return;
+        }
+        resizeTo(
+            _size.width + x,
+            _size.height + y
+        );
+        _mouseStart.x = e.clientX;
+        _mouseStart.y = e.clientY;
+    });
+    _resizePointer.addEventListener('dragend', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var x = e.clientX - _mouseStart.x;
+        var y = e.clientY - _mouseStart.y;
+        resizeTo(
+            _size.width + x < 70 ? 70 : _size.width + x,
+            _size.height + y < 30 ? 30 : _size.height + y
+        );
+        _mouseStart.x = 0;
+        _mouseStart.y = 0;
+        _isResizing = false;
+    });
 
     /*
      * bodyEditor 付箋に付属するテキストエリア
@@ -112,40 +150,17 @@ var Poist = Poist || function(text) {
     _container.classList.add('clear-fix');
     _container.appendChild(_header);
     _container.appendChild(_body);
-    _container.addEventListener('dragstart', function(e) {
-        float(e.target);
-        _isResizing = true;
-        _mouseStart.x = e.clientX;
-        _mouseStart.y = e.clientY;
-    });
+    _container.appendChild(_resizePointer);
     _container.addEventListener('dragend', function(e) {
-        if (_isResizing) {
-            _isResizing = false;
-            resizeTo(
-                _size.width + e.clientX,
-                _size.height + e.clientY + window.scrollY
-            );
-            _mouseStart.x = 0;
-            _mouseStart.y = 0;
-        } else {
-            moveTo(e.clientX + window.scrollX,
-                   e.clientY + window.scrollY);
-        }
+        if (_isResizing) return;
+        moveTo(e.clientX + window.scrollX,
+               e.clientY + window.scrollY);
     });
-    _container.addEventListener('drag', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        if (_isResizing) {
-            resizeTo(
-                _size.width + e.clientX - _mouseStart.x,
-                _size.height + e.clientY + window.scrollY
-            );
-            _mouseStart.x = e.clientX;
-            _mouseStart.y = e.clientY;
-        }
-    });
-
     _container.addEventListener('click', function(e) {
+        resizeTo(
+            _size.width,
+            _size.height
+        );
         float(e.target);
     });
 
