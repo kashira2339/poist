@@ -60,7 +60,11 @@ var Poist = Poist || function(text) {
         _container.style.top = _position.y + 'px';
         _container.style.width = _size.width + 'px';
         _container.style.height = _size.height + 'px';
-        _body.innerText = _text;
+        try {
+            _body.innerText = _text;
+        } catch(e) {
+            console.warn('Poistのエラーは無視されました');
+        }
     }
 
     /*
