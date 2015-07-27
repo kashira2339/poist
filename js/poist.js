@@ -1,5 +1,10 @@
 var Poist = Poist || function(text) {
     var _index = PoistObject.holder.size() + 1;
+    var _isResizing = false;
+    var _mouseStart = {
+        x: 0,
+        y: 0
+    };
 
     var _container = document.createElement('div');
     var _header = document.createElement('div');
@@ -33,6 +38,15 @@ var Poist = Poist || function(text) {
     function moveTo(x, y) {
         _position.x = x;
         _position.y = y - _size.height;
+        apply();
+    }
+
+    /*
+     * 付箋の大きさを変える
+     */
+    function resizeTo(x, y) {
+        _size.width = x;
+        _size.height = y - _size.height;
         apply();
     }
 
@@ -100,11 +114,37 @@ var Poist = Poist || function(text) {
     _container.appendChild(_body);
     _container.addEventListener('dragstart', function(e) {
         float(e.target);
+        _isResizing = true;
+        _mouseStart.x = e.clientX;
+        _mouseStart.y = e.clientY;
     });
     _container.addEventListener('dragend', function(e) {
-        moveTo(e.clientX + window.scrollX,
-               e.clientY + window.scrollY);
+        if (_isResizing) {
+            _isResizing = false;
+            resizeTo(
+                _size.width + e.clientX,
+                _size.height + e.clientY + window.scrollY
+            );
+            _mouseStart.x = 0;
+            _mouseStart.y = 0;
+        } else {
+            moveTo(e.clientX + window.scrollX,
+                   e.clientY + window.scrollY);
+        }
     });
+    _container.addEventListener('drag', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        if (_isResizing) {
+            resizeTo(
+                _size.width + e.clientX - _mouseStart.x,
+                _size.height + e.clientY + window.scrollY
+            );
+            _mouseStart.x = e.clientX;
+            _mouseStart.y = e.clientY;
+        }
+    });
+
     _container.addEventListener('click', function(e) {
         float(e.target);
     });
