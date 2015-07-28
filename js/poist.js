@@ -131,6 +131,7 @@ var Poist = Poist || function(text) {
      * 閉じるボタン
      * 付箋を消す
      */
+    _closeBtn.classList.add('close-btn');
     _closeBtn.innerText = '×';
     _closeBtn.addEventListener('click', function() {
         PoistObject.holder.remove(_index);
