@@ -96,8 +96,8 @@ var Poist = Poist || function(text) {
         var x = e.clientX - _mouseStart.x;
         var y = e.clientY - _mouseStart.y;
         resizeTo(
-            _size.width + x < 70 ? 70 : _size.width + x,
-            _size.height + y < 30 ? 30 : _size.height + y
+            _size.width + x < 70 ? 70 : _size.width + x + 8,
+            _size.height + y < 30 ? 30 : _size.height + y - 8
         );
         _mouseStart.x = 0;
         _mouseStart.y = 0;
