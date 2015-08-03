@@ -10,7 +10,7 @@
             }, function(tab){
                 chrome.tabs.sendMessage(
                     tab[0].id,
-                    'hoge',
+                    'blue',
                     function(response) {
                         console.log(response.hoge);
                     });
