@@ -1,11 +1,17 @@
 {
     "name": "Poist",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "manifest_version": 2,
     "description": "Poist create post-it every domain.",
     "permissions": [
+        "tabs",
         "contextMenus"
     ],
+    "background": {
+        "scripts": [
+            "js/background.js"
+        ]
+    },
     "icons": {
         "16": "icon/16.png",
         "48": "icon/48.png",
@@ -13,8 +19,16 @@
     },
     "content_scripts": [
         {
-            "matches": ["http://*/*", "https://*/*"],
-            "js": ["js/poist.js", "js/poist_controller.js", "js/poist_holder.js", "js/main.js"],
+            "matches": [
+                "http://*/*",
+                "https://*/*"
+            ],
+            "js": [
+                "js/poist.js",
+                "js/poist_holder.js",
+                "js/poist_controller.js",
+                "js/main.js"
+            ],
             "css": ["css/main.css"]
         }
     ]
