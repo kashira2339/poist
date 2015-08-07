@@ -7,7 +7,9 @@ var PoistController = function() {
 
     addBtn.innerText = '+';
     addBtn.addEventListener('click', function() {
-        var poist = new Poist( window.getSelection().toString());
+        var poist = new Poist({
+            text: window.getSelection().toString()
+        });
         poistHolder.add(poist);
     });
 

@@ -6,7 +6,10 @@ var PoistObject = PoistObject || {};
     PoistObject.holder.init();
     chrome.runtime.onMessage.addListener(
         function(msg, sender, sendResponse) {
-            var poist = new Poist(window.getSelection().toString()); 
+            var poist = new Poist({
+                text: window.getSelection().toString(),
+                color: msg
+            }); 
             PoistObject.holder.add(poist);
         }
     );

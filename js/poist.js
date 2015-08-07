@@ -1,4 +1,9 @@
-var Poist = Poist || function(text) {
+var Poist = Poist || function(custom) {
+    var _default = {
+        text: '',
+        color: '#3498db'
+    };
+
     var _index = PoistObject.holder.size() + 1;
     var _isResizing = false;
     var _mouseStart = {
@@ -14,7 +19,11 @@ var Poist = Poist || function(text) {
     var _resizePointer = document.createElement('div');
 
     var _title = 'No Title';
-    var _text = text === undefined ? '' : text;
+    var _text = custom.text === undefined ?
+            _default.text : custom.text;
+    var _color = custom.color === undefined ?
+            _default.color : custom.color;
+
     var _position = {
         x : 10,
         y : 10
@@ -60,6 +69,8 @@ var Poist = Poist || function(text) {
         _container.style.top = _position.y + 'px';
         _container.style.width = _size.width + 'px';
         _container.style.height = _size.height + 'px';
+        _container.style.backgroundColor = _color;
+        _header.style.backgroundColor = _color;
         try {
             _body.innerText = _text;
         } catch(e) {
@@ -206,6 +217,7 @@ var Poist = Poist || function(text) {
             return {
                 title: _title,
                 body: _text,
+                color: _color,
                 position: _position,
                 size: _size
             };

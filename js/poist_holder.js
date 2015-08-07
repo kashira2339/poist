@@ -50,7 +50,10 @@ var PoistHolder = function() {
                 if(Object.keys(d[i]).length === 0) {
                     return;
                 }
-                var poist = new Poist(d[i].body);
+                var poist = new Poist({
+                    text: d[i].body,
+                    color: d[i].color
+                });
                 poist.move(d[i].position.x, d[i].position.y);
                 poist.resize(d[i].size.width, d[i].size.height);
                 poistList.push(poist);
