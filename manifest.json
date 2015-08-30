@@ -1,6 +1,6 @@
 {
     "name": "Poist",
-    "version": "0.1.0",
+    "version": "1.0.0",
     "manifest_version": 2,
     "description": "Poist create post-it every domain. drop image, movie, and pdf from your computer to poist.",
     "permissions": [
