@@ -12,6 +12,7 @@
 
     chrome.contextMenus.create({
         'title': 'Poistを追加',
+        contexts: ['page', 'selection'],
         'id': POIST_ADD_PARENT_ID
     });
 

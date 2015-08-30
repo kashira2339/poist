@@ -52,10 +52,12 @@ var PoistHolder = function() {
                 }
                 var poist = new Poist({
                     text: d[i].body,
-                    color: d[i].color
+                    color: d[i].color,
+                    image: d[i].image
                 });
                 poist.move(d[i].position.x, d[i].position.y);
                 poist.resize(d[i].size.width, d[i].size.height);
+                poist.create();
                 poistList.push(poist);
             }, data);
             isFirst = false;
@@ -88,3 +90,5 @@ var PoistHolder = function() {
         }
     };
 };
+
+PoistObject.holder = new PoistHolder();

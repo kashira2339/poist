@@ -1,8 +1,8 @@
 {
     "name": "Poist",
-    "version": "0.0.2",
+    "version": "0.1.0",
     "manifest_version": 2,
-    "description": "Poist create post-it every domain.",
+    "description": "Poist create post-it every domain. drop image, movie, and pdf from your computer to poist.",
     "permissions": [
         "tabs",
         "contextMenus"
@@ -24,9 +24,9 @@
                 "https://*/*"
             ],
             "js": [
-                "js/poist.js",
+                "js/env.js",
                 "js/poist_holder.js",
-                "js/poist_controller.js",
+                "js/poist.js",
                 "js/main.js"
             ],
             "css": ["css/main.css"]
