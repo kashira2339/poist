@@ -6,7 +6,7 @@ var webpack      = require('webpack'),
     autoprefixer = require('autoprefixer');
 
 module.exports = {
-  entry: ['babel-polyfill', path.join(__dirname, 'js/index.js')],
+  entry: ['babel-polyfill', path.join(__dirname, 'js/main.js')],
   output: {
     filename: 'bundle.js'
   },

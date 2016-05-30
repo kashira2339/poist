@@ -1,0 +1,145 @@
+.poist-container {
+    mergin: 2px 2px 2px 2px;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 99999;
+    background-color: #3498db;
+    box-shadow: 3px 3px 1px 1px rgba(0, 0, 0, 0.4);
+    border-radius: 2px;
+    opacity: 0.9;
+}
+
+.poist-container:hover {
+    opacity: 1.0;
+}
+
+.poist-container > div,
+.poist-container > pre {
+    float: left;
+    display: inline-block;
+    height: 100%;
+}
+
+.poist-container > .poist-header {
+    width: 24px;
+    background-color: #3498db;
+}
+
+.poist-container > .poist-header:hover {
+    cursor: move;
+}
+
+.poist-container > .poist-header > .close-btn {
+    font-size: 36px;
+    padding: 0;
+    text-decoration: none;
+    display: inline-block;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #2c2c2c;
+}
+
+.poist-container > .poist-header > a:hover {
+    color: #7f8c8d;
+    background-color: rgba(0,0,0,0);
+    cursor: pointer;
+}
+
+.poist-container > .poist-body {
+    margin: 0;
+    margin-top: 4px;
+    margin-left: 4px;
+    padding: 0;
+    border-radius: 0;
+    background-color: #fff;
+    border-style: none;
+    width: calc(100% - 32px);
+    height: calc(100% - 8px);
+    font-size: small;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;;
+}
+
+.poist-container > .poist-body > .poist-text {
+    width: 100%;
+    height: 100%;
+    resize: none;
+}
+
+.poist-container > .poist-body > img,
+.poist-container > .poist-body > video,
+.poist-container > .poist-body > object,
+{
+    width: 100%;
+    height: 100%;
+}
+
+.poist-container.top-poist {
+    z-index: 100000;
+}
+
+.poist-container .poist-resize-pointer {
+    width: 8px;
+    height: 8px;
+    background-color: #2c2c2c;
+    margin-left: calc(100% - 8px);
+    margin-top: -8px;
+    display: inline-block;
+}
+
+.poist-container .poist-resize-pointer:hover {
+    cursor: se-resize;
+    background-color: #34495e;
+}
+
+.poist-container .poist-resize-pointer:active {
+    cursor: se-resize;
+    background-color: #34495e;
+}
+
+.poist-controller {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    width: 120px;
+    padding: 10px;
+    font-size: medium;
+    border-radius: 40px;
+    background-color: #222;
+    text-align: center;
+    opacity: 0.3;
+    -webkit-user-select: none
+}
+
+.poist-controller:hover {
+    opacity: 1.0;
+}
+
+.poist-controller > label {
+    display: inline-block;
+    color: #fff;
+    margin: 0 10px 0 0;
+}
+
+.poist-controller > label > input{
+    margin-left: 5px;
+}
+
+.poist-controller > button {
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    background-color: #2ecc71;
+    color: #fff;
+    padding: 0;
+    border: none;
+    text-align: center;
+}
+
+.poist-controller > button:hover {
+    background-color: #2cc36b;
+}
