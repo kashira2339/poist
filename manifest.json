@@ -24,12 +24,8 @@
                 "https://*/*"
             ],
             "js": [
-                "js/env.js",
-                "js/poist_holder.js",
-                "js/poist.js",
-                "js/main.js"
-            ],
-            "css": ["css/main.css"]
+                "bundle.js"
+            ]
         }
     ]
 }

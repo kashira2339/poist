@@ -1,0 +1,37 @@
+{
+    "name": "poist",
+    "version": "1.0.0",
+    "description": "This app is petit memo in browser. like a post it.",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "webpack --watch",
+        "build": "webpack"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/kashira2339/poist.git"
+    },
+    "author": "Taka",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/kashira2339/poist/issues"
+    },
+    "homepage": "https://github.com/kashira2339/poist#readme",
+    "devDependencies": {
+        "autoprefixer": "^6.3.6",
+        "babel-core": "^6.9.1",
+        "babel-loader": "^6.2.4",
+        "babel-preset-es2015": "^6.9.0",
+        "css-loader": "^0.23.1",
+        "node-sass": "^3.7.0",
+        "postcss-loader": "^0.9.1",
+        "precss": "^1.4.0",
+        "sass-loader": "^3.2.0",
+        "style-loader": "^0.13.1",
+        "webpack": "^1.13.1"
+    },
+    "dependencies": {
+        "babel-polyfill": "^6.9.1"
+    }
+}
