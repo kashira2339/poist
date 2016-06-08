@@ -1,5 +1,4 @@
 export function dragmove(event) {
-  console.log(event);
   let target = event.target,
       x      = (parseFloat(target.dataset.x) || 0) + event.dx,
       y      = (parseFloat(target.dataset.y) || 0) + event.dy;
@@ -9,7 +8,6 @@ export function dragmove(event) {
 }
 
 export function resizemove(event) {
-  console.log(event);
   let target = event.target,
       x      = (parseFloat(target.dataset.x) || 0),
       y      = (parseFloat(target.dataset.y) || 0);

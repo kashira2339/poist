@@ -1,11 +1,14 @@
-import Vue   from 'vue';
-import Poist from './poist.vue';
+import React, { Component } from 'react';
+import { render } from 'react-dom';
+import '../css/main.scss';
 
-const PoistParent = new Vue({
-  el: 'body',
-  components: {
-    Poist
-  }
-});
-const app = new PoistParent({});
-PoistParent.$appendTo(document.body);
+import PoistList from './components/PoistList';
+
+const poistHolder = document.createElement('div');
+poistHolder.id = 'poist-holeder';
+document.body.appendChild(poistHolder);
+
+render(
+  <PoistList />,
+  document.getElementById('poist-holeder')
+);

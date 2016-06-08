@@ -6,9 +6,14 @@ var webpack      = require('webpack'),
     autoprefixer = require('autoprefixer');
 
 module.exports = {
-  entry: ['babel-polyfill', path.join(__dirname, 'js/main.js')],
+  entry: ['babel-polyfill', path.join(__dirname, 'js/index.js')],
   output: {
     filename: 'bundle.js'
+  },
+  resolve: {
+    alias: {
+      'font-awesome': path.join(__dirname, 'node_modules/font-awesome/css/font-awesome.css')
+    }
   },
   plugins: [
     new webpack.optimize.UglifyJsPlugin({
@@ -23,14 +28,11 @@ module.exports = {
         exclude: /node_modules/,
         loader: 'babel',
         query: {
-          presets: ['es2015']
+          presets: ['react', 'es2015']
         }
       },
-      {
-        test: /\.scss$/,
-        exclude: /node_modules/,
-        loader: 'style!css!postcss!sass'
-      }
+      { test: /\.css$/,  loader: 'style!css?modules' },
+      { test: /\.scss$/, loader: 'style!css!postcss!sass' }
     ]
   },
   postcss: function () {
