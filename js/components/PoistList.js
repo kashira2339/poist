@@ -76,6 +76,11 @@ export default class PoistList extends Component {
       })
     });
   }
+  removePoist(id) {
+    this.setState({
+      poists: this.state.poists.filter((poist) => poist.id !== id)
+    });
+  }
   render() {
     let poists = this.state.poists.map((poist) => {
       return <Poist
@@ -83,8 +88,8 @@ export default class PoistList extends Component {
                move={this.move.bind(this)}
                resize={this.resize.bind(this)}
                onChange={ this.onChange.bind(this) }
-               toggleEditor={ this.toggleEditor.bind(this) } 
-             />
+               toggleEditor={ this.toggleEditor.bind(this) }
+               removePoist={ this.removePoist.bind(this) } />
     });
     return(
       <div className='poistList'>

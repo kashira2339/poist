@@ -41,6 +41,7 @@
     "marked": "^0.3.5",
     "react": "^15.1.0",
     "react-dom": "^15.1.0",
-    "react-textarea-autosize": "^4.0.2"
+    "react-textarea-autosize": "^4.0.2",
+    "redux": "^3.5.2"
   }
 }
