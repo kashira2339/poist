@@ -21,6 +21,7 @@ $sub-color: #b4dbc0;
     color: $accent-color;
     cursor: pointer;
     margin: 0;
+    font-size: 18px;
             
     &:hover {
         opacity: 0.7;
@@ -65,8 +66,7 @@ $sub-color: #b4dbc0;
         @extend .clearfix;
         padding: 0 5px;
         border-radius: 4px 4px 0 0;
-        font-size: 14px;
-        line-height: 16px;
+        height: 28px;
         background-color: $main-color;
         display: block;
         &:hover {
@@ -75,7 +75,7 @@ $sub-color: #b4dbc0;
     }
 
     &__body {
-        padding: 8px 12px ;
+        padding: 8px 12px;
         border-radius: 0;
         border-style: none;
         border-radius: 0 0 4px 4px;
@@ -93,7 +93,7 @@ $sub-color: #b4dbc0;
         }
         
         &--half {
-            width: 50%;
+            width: calc(50% - 24px);
         }
         
         &--inactive {

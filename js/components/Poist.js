@@ -10,11 +10,15 @@ import icono from 'icono/dist/icono.min.css';
 // import PoistEditor from './PoistEditor';
 
 const btnClass = 'poist__btn poist__btn--icono';
-const poistClass    = `poist ${githubMarkdownCSS['markdown-body']}`;
+const poistClass    = 'poist';
+const markdownClass = githubMarkdownCSS['markdown-body'];
 const closeBtnClass = `${btnClass} poist__btn--close ${icono['icono-crossCircle']}`;
 const editBtnClass  = `${btnClass} poist__btn--edit ${icono['icono-disqus']}`;
 
 export default class Poist extends Component {
+  constructor(props) {
+    super(props);
+  }
   componentDidMount() {
     const dom = findDOMNode(this);
     interact(dom)
@@ -49,7 +53,7 @@ export default class Poist extends Component {
   toggleEditor() {
     this.props.toggleEditor(this.props.poist.id);
   }
-  removePoist() {
+  remove() {
     this.props.removePoist(this.props.poist.id);
   }
   render() {
@@ -66,16 +70,16 @@ export default class Poist extends Component {
           onChange={ this.handleChange.bind(this) }>
         </Textarea> : null;
     const bodyClass = this.props.poist.showEditor ?
-            'poist__body poist__body--half' :
-            'poist__body';
+            `${markdownClass} poist__body poist__body--half` :
+            `${markdownClass} poist__body`;
     return(
-      <div className={ poistClass } styles="{ poistStyles }">
+      <div styles={ poistStyles } className={ poistClass }>
         <div className='poist__header'>
-          <a className='poist__btn poist__btn--close' onClick={ this.removePoist.bind(this) }>
+          <a className='poist__btn poist__btn--close' onClick={ this.remove.bind(this) }>
             close
           </a>
           <a className='poist__btn poist__btn--edit' onClick={ this.toggleEditor.bind(this) }>
-            edit
+            toggle
           </a>
         </div>
         { Editor }
