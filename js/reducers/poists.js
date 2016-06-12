@@ -12,6 +12,7 @@ import {
 import { POIST_LOCALSTORAGE_KEY } from '../constants/Storage';
 
 const initialState = [
+  /** sample
   { 
     id: 0,
     value: 'poists on redux',
@@ -21,6 +22,7 @@ const initialState = [
     width: 240,
     height: 160
   }
+   **/
 ];
 
 const reducer = {
