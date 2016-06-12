@@ -41,7 +41,10 @@
     "marked": "^0.3.5",
     "react": "^15.1.0",
     "react-dom": "^15.1.0",
+    "react-redux": "^4.4.5",
     "react-textarea-autosize": "^4.0.2",
-    "redux": "^3.5.2"
+    "redux": "^3.5.2",
+    "redux-localstorage": "^0.4.0",
+    "redux-localstorage-filter": "^0.1.1"
   }
 }

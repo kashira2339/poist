@@ -1,23 +1,27 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import Textarea from 'react-textarea-autosize';
 import interact from 'interact.js';
 import { dragmove, resizemove } from '../listener';
 import { findDOMNode } from 'react-dom';
 import marked from 'marked';
 import githubMarkdownCSS from 'github-markdown-css/github-markdown.css';
-import icono from 'icono/dist/icono.min.css';
-// import PoistBody from './PoistBody';
-// import PoistEditor from './PoistEditor';
 
-const btnClass = 'poist__btn poist__btn--icono';
 const poistClass    = 'poist';
 const markdownClass = githubMarkdownCSS['markdown-body'];
-const closeBtnClass = `${btnClass} poist__btn--close ${icono['icono-crossCircle']}`;
-const editBtnClass  = `${btnClass} poist__btn--edit ${icono['icono-disqus']}`;
 
 export default class Poist extends Component {
-  constructor(props) {
-    super(props);
+  static get propTypes() {
+    return {
+      poist: PropTypes.object.isRequired,
+      editPoist: PropTypes.func.isRequired,
+      removePoist: PropTypes.func.isRequired,
+      movePoist: PropTypes.func.isRequired,
+      resizePoist: PropTypes.func.isRequired,
+      togglePoistEditor: PropTypes.func.isRequired
+    };
+  }
+  constructor(props, context) {
+    super(props, context);
   }
   componentDidMount() {
     const dom = findDOMNode(this);
@@ -28,7 +32,13 @@ export default class Poist extends Component {
           const target = event.target,
                 x      = (parseFloat(target.dataset.x) || 0) + event.dx,
                 y      = (parseFloat(target.dataset.y) || 0) + event.dy;
-          this.moved(x, y);
+          target.dataset.x = null;
+          target.dataset.y = null;
+          target.style.transform = null;
+          this.handleMoved(
+            Number(target.offsetLeft) + event.dx,
+            Number(target.offsetTop ) + event.dy
+          );
         }
       })
       .resizable({
@@ -36,54 +46,59 @@ export default class Poist extends Component {
       })
       .on('resizemove', resizemove)
       .on('resizeend', (event) => {
-        let w      = event.x0,
-            h      = event.y0;
-        this.resized(w, h);
+        const rect = event.target.getBoundingClientRect();
+        this.handleResized(rect.width, rect.height);
       });
   }
-  moved(x, y) {
-    this.props.move(this.props.poist.id, x, y);
+  handleMoved(x, y) {
+    this.props.movePoist(this.props.poist.id, x, y);
+    this.props.save();
   }
-  resized(w, h) {
-    this.props.resize(this.props.poist.id, w, h);
+  handleResized(w, h) {
+    this.props.resizePoist(this.props.poist.id, w, h);
+    this.props.save();
   }
-  handleChange(event) {
-    this.props.onChange(this.props.poist.id, event.target.value);
+  handleEdit(id, event) {
+    this.props.editPoist(id, event.target.value);
+    this.props.save();
   }
-  toggleEditor() {
-    this.props.toggleEditor(this.props.poist.id);
+  handleClickEdit(id) {
+    this.props.togglePoistEditor(id);
+    this.props.save();
   }
-  remove() {
-    this.props.removePoist(this.props.poist.id);
+  handleClickClose(id) {
+    this.props.removePoist(id);
+    this.props.save();
   }
   render() {
+    const { poist } = this.props;
     const poistStyles = {
-      top   : this.props.poist.y,
-      left  : (this.props.poist.showEditor ? this.props.poist.x*2 : this.props.poist.x),
-      width : this.props.poist.width,
-      height: this.props.poist.height
+      top   : poist.y,
+      left  : poist.x,
+      width : poist.width,
+      height: poist.height
     };
-    const Editor = this.props.poist.showEditor ? 
+    const Editor = poist.showEditor ? 
         <Textarea
           className='poist__editor'
-          value={ this.props.poist.value }
-          onChange={ this.handleChange.bind(this) }>
+          value={ poist.value }
+          onChange={event => this.handleEdit( poist.id, event) }>
         </Textarea> : null;
-    const bodyClass = this.props.poist.showEditor ?
+    const bodyClass = poist.showEditor ?
             `${markdownClass} poist__body poist__body--half` :
             `${markdownClass} poist__body`;
     return(
-      <div styles={ poistStyles } className={ poistClass }>
+      <div style={ poistStyles } className={ poistClass }>
         <div className='poist__header'>
-          <a className='poist__btn poist__btn--close' onClick={ this.remove.bind(this) }>
+          <a className='poist__btn poist__btn--close' onClick={ this.handleClickClose.bind(this, poist.id) }>
             close
           </a>
-          <a className='poist__btn poist__btn--edit' onClick={ this.toggleEditor.bind(this) }>
+          <a className='poist__btn poist__btn--edit' onClick={ this.handleClickEdit.bind(this, poist.id) }>
             toggle
           </a>
         </div>
         { Editor }
-        <div className={ bodyClass } dangerouslySetInnerHTML={{__html: marked(this.props.poist.value) }}>
+        <div className={ bodyClass } dangerouslySetInnerHTML={{__html: marked(poist.value) }}>
         </div>
       </div>
     );
