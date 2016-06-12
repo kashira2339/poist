@@ -42,6 +42,9 @@ export default class Poist extends Component {
         }
       })
       .resizable({
+        snap: {
+          relativePoints: [ { x: 10, y: 10 } ]
+        },
         edges: { left: false, right: true, bottom: true, top: false }
       })
       .on('resizemove', resizemove)
@@ -91,10 +94,10 @@ export default class Poist extends Component {
       <div style={ poistStyles } className={ poistClass }>
         <div className='poist__header'>
           <a className='poist__btn poist__btn--close' onClick={ this.handleClickClose.bind(this, poist.id) }>
-            close
+            {' × '}
           </a>
           <a className='poist__btn poist__btn--edit' onClick={ this.handleClickEdit.bind(this, poist.id) }>
-            toggle
+            { !poist.showEditor ? '_φ(･_･' : '(ﾟ-ﾟ)ﾉ⌒✎'}
           </a>
         </div>
         { Editor }

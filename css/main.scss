@@ -75,11 +75,11 @@ $sub-color: #b4dbc0;
     }
 
     &__body {
-        padding: 8px 12px;
+        padding: 8px 0 0 12px;
         border-radius: 0;
         border-style: none;
         border-radius: 0 0 4px 4px;
-        width: calc(100% - 24px);
+        width: calc(100% - 12px);
         font-size: small;
         white-space: nowrap;
         overflow: scroll;
